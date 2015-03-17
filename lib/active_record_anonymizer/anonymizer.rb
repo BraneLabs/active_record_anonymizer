@@ -43,7 +43,14 @@ module ActiveRecordAnonymizer
         raise ArgumentError, "You need to supply at least one attribute" if attributes.empty?
 
         columns.each do |column|
-          key = options[:strategy].to_s.presence || "ActiveRecordAnonymizer::Strategies::TextAnonymizer"
+          key = case options[:strategy].to_s.presence
+                when nil
+                  "ActiveRecordAnonymizer::Strategies::TextAnonymizer"
+                when /\AActiveRecordAnonymizer::Strategies::/
+                  options[:strategy].to_s
+                else
+                  "ActiveRecordAnonymizer::Strategies::#{options[:strategy]}"
+                end
 
           begin
             klass = key.constantize
@@ -51,7 +58,7 @@ module ActiveRecordAnonymizer
             raise ArgumentError, "Unknown anonymizer: '#{key}'"
           end
 
-          @view_columns[column.to_sym] = klass.anonymize(table_name, column, options)
+          @view_columns[column.to_sym] = klass.new(table_name, column, options).anonymize
         end
       end
     end
