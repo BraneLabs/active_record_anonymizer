@@ -15,7 +15,7 @@ module ActiveRecordAnonymizer
           name = "#{table_name}.#{column_name}"
 
           %{
-            CASE WHEN age(patients.birth_date) > '90 years'::interval
+            CASE WHEN age(#{name}) > '90 years'::interval
             THEN
               '#{90.years.ago.year}-01-01'::date
             ELSE
