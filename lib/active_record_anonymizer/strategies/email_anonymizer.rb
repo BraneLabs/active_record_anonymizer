@@ -24,7 +24,7 @@ module ActiveRecordAnonymizer
             END
           }
         else
-          raise "#{self.name} not implemented for #{adapter}"
+          raise "#{self.class.name} not implemented for #{adapter}"
         end
       end
     end

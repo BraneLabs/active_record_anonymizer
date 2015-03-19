@@ -18,6 +18,10 @@ module ActiveRecordAnonymizer
         @view_name || "#{ActiveRecordAnonymizer::Anonymizer.default_schema_name}.#{table_name}"
       end
 
+      def anonymized_columns
+        @anonymized_columns || {}
+      end
+
       def view_columns
         @view_columns ||= {}
         default_view_columns.merge(@view_columns)
@@ -36,6 +40,7 @@ module ActiveRecordAnonymizer
       def anonymizes(*attributes)
         @generate_anonymized_view = true
         @view_columns ||= {}
+        @anonymized_columns ||= Hash.new({})
 
         options = attributes.extract_options!.dup
         columns = attributes - [options]
@@ -53,12 +58,13 @@ module ActiveRecordAnonymizer
                 end
 
           begin
-            klass = key.constantize
+            klazz = key.constantize
           rescue NameError
             raise ArgumentError, "Unknown anonymizer: '#{key}'"
           end
 
-          @view_columns[column.to_sym] = klass.new(table_name, column, options).anonymize
+          @anonymized_columns[column.to_sym] = (options.presence || {}).merge(strategy: key.sub(/\AActiveRecordAnonymizer::Strategies::/, ""))
+          @view_columns[column.to_sym] = klazz.new(table_name, column, options).anonymize
         end
       end
     end

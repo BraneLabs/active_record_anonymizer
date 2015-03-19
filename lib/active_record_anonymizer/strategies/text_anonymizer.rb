@@ -18,7 +18,7 @@ module ActiveRecordAnonymizer
         when "postgresql"
           "translate((#{table_name}.#{column_name})::text, '#{self.base_dictionary}'::text, '#{generate_mapping()}'::text)"
         else
-          raise "#{self.name} not implemented for #{adapter}"
+          raise "#{self.class.name} not implemented for #{adapter}"
         end
       end
 
