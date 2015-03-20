@@ -1,23 +1,21 @@
 namespace :db do
   namespace :anonymizer do
     desc "Remove created schema"
-    task :remove_schema do
-      Rails.application.eager_load! if defined?(Rails)
+    task :remove_schema => :environment do
       ActiveRecord::Base.connection.execute(
         "DROP SCHEMA IF EXISTS #{ActiveRecordAnonymizer::Anonymizer.default_schema_name} CASCADE"
       )
     end
 
     desc "Creates mandatory schema"
-    task :create_schema do
-      Rails.application.eager_load! if defined?(Rails)
+    task :create_schema => :environment do
       ActiveRecord::Base.connection.execute(
         "CREATE SCHEMA IF NOT EXISTS #{ActiveRecordAnonymizer::Anonymizer.default_schema_name}"
       )
     end
 
     desc "Generates all the views for the models"
-    task :generate_views do
+    task :generate_views => :environment do
       Rails.application.eager_load! if defined?(Rails)
 
       generated_views = {}
