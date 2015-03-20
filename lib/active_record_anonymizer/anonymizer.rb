@@ -5,11 +5,11 @@ module ActiveRecordAnonymizer
       "anonymized_schema"
     end
 
-    module ClassMethods
-      def primary_key
-        super rescue "id"
-      end
+    included do
+      self.primary_key = "id"
+    end
 
+    module ClassMethods
       def generate_anonymized_view?
         @generate_anonymized_view || false
       end
