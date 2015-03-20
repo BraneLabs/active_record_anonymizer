@@ -70,5 +70,3 @@ module ActiveRecordAnonymizer
     end
   end
 end
-
-ActiveRecord::Base.send(:include, ActiveRecordAnonymizer::Anonymizer)
