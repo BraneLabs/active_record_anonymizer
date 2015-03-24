@@ -55,4 +55,4 @@ end
 
 RSpec.configure do |config|
   config.include RSpec::Anonymizer::Matchers
-end
+end if defined?(RSpec.configure)
