@@ -41,6 +41,8 @@ Rake::Task["db:migrate"].enhance do
   Rake::Task["db:anonymizer:generate_views"].invoke
 end
 
+Rake::Task["db:rollback"].enhance ["db:anonymizer:remove_schema"]
+
 Rake::Task["db:rollback"].enhance do
   Rake::Task["db:anonymizer:generate_views"].invoke
 end
