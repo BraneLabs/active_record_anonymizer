@@ -44,5 +44,6 @@ end
 Rake::Task["db:rollback"].enhance ["db:anonymizer:remove_schema"]
 
 Rake::Task["db:rollback"].enhance do
+  Rake::Task["db:anonymizer:create_schema"].invoke
   Rake::Task["db:anonymizer:generate_views"].invoke
 end
