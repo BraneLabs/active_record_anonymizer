@@ -21,6 +21,7 @@ namespace :db do
       generated_views = {}
       ActiveRecord::Base.descendants.each do |c|
         if c.respond_to?(:generate_anonymized_view?) && c.generate_anonymized_view? && !generated_views[c.table_name] && ActiveRecord::Base.connection.table_exists?(c.table_name)
+          c.reset_column_information
           generated_views[c.table_name] = true
           puts "Generating view '#{c.view_name}' for table '#{c.table_name}'"
 
