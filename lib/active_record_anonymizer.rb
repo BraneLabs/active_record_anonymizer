@@ -12,5 +12,5 @@ require "active_record_anonymizer/strategies/birth_date_anonymizer.rb"
 
 require "rspec/anonymizer/matchers.rb"
 
-load "active_record/railties/databases.rake"
-load "tasks/views.rake"
+import "active_record/railties/databases.rake"
+import "tasks/views.rake"
