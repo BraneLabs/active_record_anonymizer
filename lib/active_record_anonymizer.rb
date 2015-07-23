@@ -12,5 +12,6 @@ require "active_record_anonymizer/strategies/birth_date_anonymizer.rb"
 
 require "rspec/anonymizer/matchers.rb"
 
-import "active_record/railties/databases.rake"
-import "tasks/views.rake"
+if defined? Rails
+  require "active_record_anonymizer/railties"
+end
