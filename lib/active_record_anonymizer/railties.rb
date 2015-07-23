@@ -1,7 +1,7 @@
 module ActiveRecordAnonymizer
   class Railtie < Rails::Railtie
     rake_tasks do
-      import "tasks/views.rake"
+      load "tasks/views.rake"
     end
   end
 end
