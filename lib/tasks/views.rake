@@ -37,7 +37,7 @@ namespace :db do
   end
 end
 
-Rake::Task["db:migrate"].enhance ["db:anonymizer:create_schema"] do
+Rake::Task["db:migrate"].enhance ["db:anonymizer:remove_schema", "db:anonymizer:create_schema"] do
   Rake::Task["db:anonymizer:generate_views"].invoke
 end
 
