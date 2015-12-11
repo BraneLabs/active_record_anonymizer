@@ -1,13 +1,6 @@
 module ActiveRecordAnonymizer
   module Strategies
-    class BirthDateAnonymizer
-      attr_reader :table_name, :column_name, :options
-      def initialize(table_name, column_name, options = {})
-        @table_name = table_name
-        @column_name = column_name
-        @options = options
-      end
-
+    class BirthDateAnonymizer < BaseAnonymizer
       def anonymize
         adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
         case adapter
