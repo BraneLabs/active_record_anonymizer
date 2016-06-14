@@ -4,7 +4,7 @@ module ActiveRecordAnonymizer
       extend self
 
       def search_path
-        ActiveRecord::Base.connection.schema_search_path
+        ActiveRecord::Base.connection.execute("show search_path").first["search_path"]
       end
 
       def default_search_path
