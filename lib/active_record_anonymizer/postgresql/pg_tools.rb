@@ -32,7 +32,7 @@ module ActiveRecordAnonymizer
         name = options[:connection_name] || ActiveRecordAnonymizer::Anonymizer.default_schema_name
         path_parts = [name.to_s, "public"].join(",")
 
-        ActiveRecord::Base.transaction do
+        ActiveRecord::Base.transaction(requires_new: true) do
           ActiveRecord::Base.connection.execute("SET LOCAL search_path TO #{path_parts}", 'SCHEMA')
           yield
           ActiveRecord::Base.connection.execute("SET LOCAL search_path TO #{default_search_path}", 'SCHEMA')
@@ -44,7 +44,7 @@ module ActiveRecordAnonymizer
 
         old_path = search_path
 
-        ActiveRecord::Base.transaction do
+        ActiveRecord::Base.transaction(requires_new: true) do
           ActiveRecord::Base.connection.execute("SET LOCAL search_path TO #{default_search_path}", 'SCHEMA')
           yield
           ActiveRecord::Base.connection.execute("SET LOCAL search_path TO #{old_path}", 'SCHEMA')
