@@ -34,8 +34,9 @@ module ActiveRecordAnonymizer
 
         ActiveRecord::Base.transaction do
           ActiveRecord::Base.connection.execute("SET LOCAL search_path TO #{path_parts}", 'SCHEMA')
-          yield
+          result = yield
           ActiveRecord::Base.connection.execute("SET LOCAL search_path TO #{default_search_path}", 'SCHEMA')
+          result
         end
       end
 
@@ -46,8 +47,9 @@ module ActiveRecordAnonymizer
 
         ActiveRecord::Base.transaction do
           ActiveRecord::Base.connection.execute("SET LOCAL search_path TO #{default_search_path}", 'SCHEMA')
-          yield
+          result = yield
           ActiveRecord::Base.connection.execute("SET LOCAL search_path TO #{old_path}", 'SCHEMA')
+          result
         end
       end
     end
