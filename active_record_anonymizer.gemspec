@@ -25,6 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec-mocks"
 
   spec.add_dependency "pg",                                      ">= 0.17.1"
-  spec.add_dependency "activesupport",                           "~> 3.2"
-  spec.add_dependency "activerecord",                            "~> 3.2"
+  spec.add_dependency "activesupport",                           ">=  3.2"
+  spec.add_dependency "activerecord",                            ">=  3.2"
 end
