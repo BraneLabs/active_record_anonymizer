@@ -15,6 +15,8 @@ module ActiveRecordAnonymizer
               (extract(year from #{name}) || '-01-01')::date
             END
           }
+        when "nulldb"
+          ""
         else
           raise "#{self.class.name} not implemented for #{adapter}"
         end

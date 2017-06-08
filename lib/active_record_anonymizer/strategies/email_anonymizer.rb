@@ -16,6 +16,8 @@ module ActiveRecordAnonymizer
               md5(#{name})::text
             END
           }
+        when "nulldb"
+          ""
         else
           raise "#{self.class.name} not implemented for #{adapter}"
         end
