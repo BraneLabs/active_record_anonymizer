@@ -16,14 +16,19 @@ namespace :db do
 
     desc "Generates all the views for the models"
     task :generate_views => :environment do
-      Rails.application.eager_load! if defined?(Rails)
+      old_logger = nil
+      if defined?(Rails)
+        Rails.application.eager_load!
+        old_logger_level = Rails.logger.level
+        Rails.logger.level = Logger::INFO
+      end
 
       generated_views = {}
       ActiveRecord::Base.connection.schema_cache.clear!
       ActiveRecord::Base.descendants.each do |c|
         if c.respond_to?(:generate_anonymized_view?) && c.generate_anonymized_view? && !generated_views[c.table_name] && ActiveRecord::Base.connection.table_exists?(c.table_name)
           generated_views[c.table_name] = true
-          puts "Generating view '#{c.view_name}' for table '#{c.table_name}'"
+          Rails.logger.info "Generating view '#{c.view_name}' for table '#{c.table_name}'"
 
           c.reset_column_information
           ActiveRecord::Base.connection.execute(
@@ -32,6 +37,10 @@ namespace :db do
             "FROM #{c.table_name})"
           )
         end
+      end
+
+      if defined?(Rails)
+        Rails.logger.level = old_logger_level
       end
     end
   end
