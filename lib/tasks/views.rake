@@ -2,7 +2,7 @@ namespace :db do
   namespace :anonymizer do
     namespace :test do
       desc "Generate the views on the test database"
-      task :generated_views => :environment do
+      task :generate_views => :environment do
         ActiveRecord::Base.establish_connection(:test)
         Rake::Task["db:anonymizer:generate_views"].invoke
       end
