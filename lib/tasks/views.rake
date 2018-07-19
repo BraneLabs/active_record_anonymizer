@@ -1,5 +1,19 @@
 namespace :db do
   namespace :anonymizer do
+    namespace :test do
+      desc "Generate the views on the test database"
+      task :generated_views => :environment do
+        ActiveRecord::Base.establish_connection(:test)
+        Rake::Task["db:anonymizer:generate_views"].invoke
+      end
+
+      desc "Generate the schema on the test database"
+      task :create_schema => :environment do
+        ActiveRecord::Base.establish_connection(:test)
+        Rake::Task["db:anonymizer:create_schema"].invoke
+      end
+    end
+
     desc "Remove created schema"
     task :remove_schema => :environment do
       ActiveRecord::Base.connection.execute(
@@ -44,6 +58,12 @@ namespace :db do
       end
     end
   end
+end
+
+
+Rake::Task["db:test:prepare"].enhance do
+  Rake::Task["db:anonymizer:test:create_schema"].invoke
+  Rake::Task["db:anonymizer:test:generate_views"].invoke
 end
 
 Rake::Task["db:migrate"].enhance ["db:anonymizer:remove_schema", "db:anonymizer:create_schema"] do
