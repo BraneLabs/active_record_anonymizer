@@ -2,7 +2,7 @@ module ActiveRecordAnonymizer
   module Strategies
     class BirthDateAnonymizer < BaseAnonymizer
       def anonymize
-        adapter = ActiveRecord::Base.connection.instance_values["config"][:adapter]
+        adapter = ActiveRecord::Base.connection_config[:adapter]
         case adapter.to_s
         when "postgresql"
           name = "#{table_name}.#{column_name}"
