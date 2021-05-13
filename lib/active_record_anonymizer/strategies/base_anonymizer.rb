@@ -7,6 +7,12 @@ module ActiveRecordAnonymizer
         @column_name = column_name
         @options = options
       end
+
+      protected
+
+      def adapter
+        ActiveRecord::Base.connection_db_config.adapter.to_s
+      end
     end
   end
 end

@@ -10,8 +10,8 @@ RSpec.configure do |config|
   end
 
   ActiveRecord::Base.establish_connection(
-    adapter: "sqlite3",
-    database: ":memory:"
+    adapter: "postgresql",
+    database: "active_record_anonymizer"
   )
   require 'db/schema'
 end

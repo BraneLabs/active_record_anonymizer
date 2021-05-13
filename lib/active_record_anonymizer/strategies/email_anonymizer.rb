@@ -2,8 +2,7 @@ module ActiveRecordAnonymizer
   module Strategies
     class EmailAnonymizer < BaseAnonymizer
       def anonymize
-        adapter = ActiveRecord::Base.connection_config[:adapter]
-        case adapter.to_s
+        case adapter
         when "postgresql"
           name = "#{table_name}.#{column_name}"
           domain = self.options[:domain].presence || "anonymousdomain.com"

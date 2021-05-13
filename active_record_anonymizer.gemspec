@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.name          = "active_record_anonymizer"
   spec.version       = ActiveRecordAnonymizer::VERSION
   spec.authors       = ["Daniel Naves de Carvalho"]
-  spec.email         = ["daniel@wearebrane.com", "dnaves@caremessage.org"]
+  spec.email         = ["daniel@wearebrane.com"]
   spec.description   = %q{Creates views which allow anonymization of database tables on another postgresql schema}
   spec.summary       = %q{Gem for creating anonymization views.}
   spec.homepage      = ""
@@ -21,10 +21,10 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "rake",                        ">= 10.4.2"
   spec.add_development_dependency "rspec",                       ">= 3.5"
-  spec.add_development_dependency "sqlite3",                     ">= 1.3.10"
+  spec.add_development_dependency "sqlite3",                     ">= 1.4"
   spec.add_development_dependency "rspec-mocks"
 
-  spec.add_dependency "pg",                                      ">= 0.19"
-  spec.add_dependency "activesupport",                           ">=  4.2"
-  spec.add_dependency "activerecord",                            ">=  4.2"
+  spec.add_dependency "pg",                                      ">= 1.2.3"
+  spec.add_dependency "activesupport",                           ">=  6.1"
+  spec.add_dependency "activerecord",                            ">=  6.1"
 end

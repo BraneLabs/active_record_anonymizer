@@ -6,8 +6,7 @@ module ActiveRecordAnonymizer
       end
 
       def anonymize
-        adapter = ActiveRecord::Base.connection_config[:adapter]
-        case adapter.to_s
+        case adapter
         when "postgresql"
           "translate((#{table_name}.#{column_name})::text, '#{self.base_dictionary}'::text, '#{generate_mapping()}'::text)"
         when "nulldb"
